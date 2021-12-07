@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Wix xmlns="http://schemas.microsoft.com/wix/2006/wi">
+	<Product Id="*" Name="WixSample" Language="1033" Version="1.0.0.0" Manufacturer="Fatih Savas" UpgradeCode="e4d75661-6a0d-45cb-92b3-a73ea5b61246">
+		<Package InstallerVersion="200" Compressed="yes" InstallScope="perMachine" />
+
+		<MajorUpgrade DowngradeErrorMessage="A newer version of [ProductName] is already installed." />
+		<MediaTemplate />
+
+		<Feature Id="ProductFeature" Title="WixSample" Level="1">
+			<ComponentGroupRef Id="ProductComponents" />
+		</Feature>
+    <Feature Id="OptionalTools"
+         Title="Optional Tools"
+         Level="1">
+      <ComponentGroupRef Id="OptionalToolsComponents" />
+    </Feature>
+	</Product>
+
+	<Fragment>
+		<Directory Id="TARGETDIR" Name="SourceDir">
+			<Directory Id="ProgramFilesFolder">
+				<Directory Id="INSTALLFOLDER" Name="WixSample" />
+			</Directory>
+		</Directory>
+	</Fragment>
+
+	<Fragment>
+		<ComponentGroup Id="ProductComponents" Directory="INSTALLFOLDER">
+			<!-- TODO: Remove the comments around this Component element and the ComponentRef below in order to add resources to this installer. -->
+			 <Component Id="ProductComponent"> 
+				<!-- TODO: Insert files, registry keys, and other resources here. -->
+      <File Source="$(var.ConsoleApp.TargetPath)" />
+			 </Component>      
+		</ComponentGroup>
+    <ComponentGroup Id="OptionalToolsComponents" Directory="INSTALLFOLDER">
+      <Component Id="InstallMeTxt">
+        <File Id="FileInstallMeTxt"
+              Source="InstallMe.txt"
+              KeyPath="yes" />
+      </Component>
+    </ComponentGroup>
+	</Fragment>
+</Wix>
